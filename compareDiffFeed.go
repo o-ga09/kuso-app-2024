@@ -26,10 +26,7 @@ func CompareDiffFeed(ctx context.Context, latestFeed *AtomFeed) (*Entry, error) 
 func isCompareDiffFeed(_ context.Context, feedEntity *Entry) (bool, error) {
 	// ctxtime(https://github.com/newmo-oss/ctxtime)を使いたい
 	// が、今回は、ctxtimeを使わずに、time.Timeを使う
-	// now := time.Now()
-
-	// debug
-	now := time.Date(2024, 11, 11, 0, 0, 0, 0, time.UTC)
+	now := time.Now()
 	if feedEntity.Published.Year() >= now.Year() && feedEntity.Published.Month() >= now.Month() && feedEntity.Published.Day() >= now.Day() {
 		return true, nil
 	}
