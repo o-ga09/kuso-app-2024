@@ -19,4 +19,27 @@
 - [Gemini](https://gemini.google.com/)
 - [Genkit](https://firebase.google.com/products/genkit?hl=ja)
 
+## CI/CD
 
+- GitHub Actionsを使用して定期的に実行
+
+## 環境変数
+
+- GOOGLE_GENAI_API_KEY: GoogleのLLM APIキー
+- SLACK_WEBHOOK_URL: SlackのWebhook URL
+
+## 実行方法
+- 実行環境に以下の環境変数を設定します。
+- 以下のコマンドを実行してアプリケーションを起動します。
+  
+```bash
+$ go run .
+```
+
+## GitHub Actions
+
+GitHub Actionsを使用して、毎日午前8時30分(GitHub Actionsは無料枠なので、午前9時ごろに起動する)にアプリケーションを実行します。設定は cron.yml に記載されています。
+
+## Author
+
+@o-ga09
