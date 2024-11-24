@@ -14,7 +14,7 @@ import (
 
 type SummarizeLLM struct{}
 type promptInput struct {
-	URL string `json:"url"`
+	Context string `json:"context"`
 }
 
 func SummarizeBlog(ctx context.Context, url string) (string, error) {
@@ -24,25 +24,28 @@ func SummarizeBlog(ctx context.Context, url string) (string, error) {
 	}
 
 	// Define the webLoader tool
-	webLoader := ai.DefineTool(
-		"webLoader",
-		"Loads a webpage and returns the textual content.",
-		func(ctx context.Context, input struct {
-			URL string `json:"url"`
-		}) (string, error) {
-			return fetchWebContent(input.URL)
-		},
-	)
+	// Note: ここを実行しようとすると、エラーが発生します。
+	// おそらくGemini API側のエラーと思われる
+	// err="googleapi: Error 400:
+	// webLoader := ai.DefineTool(
+	// 	"webLoader",
+	// 	"Loads a webpage and returns the textual content.",
+	// 	func(ctx context.Context, input struct {
+	// 		URL string `json:"url"`
+	// 	}) (string, error) {
+	// 		return fetchWebContent(input.URL)
+	// 	},
+	// )
 
 	// Select Model
 	model := googleai.Model("gemini-1.5-flash")
 
 	// Define the Prompt
 	summarizePrompt, err := dotprompt.Define("summarizePrompt",
-		"First, fetch this link: {{url}}. Then, summarize the content within 20 words.",
+		"First, Provide this sentence: {{context}}. Then, summarize the content within 100 words. and Translate to japanese. output is japanese only.",
 		dotprompt.Config{
 			Model: model,
-			Tools: []ai.Tool{webLoader},
+			// Tools: []ai.Tool{webLoader},
 			GenerationConfig: &ai.GenerationCommonConfig{
 				Temperature: 1,
 			},
@@ -59,7 +62,7 @@ func SummarizeBlog(ctx context.Context, url string) (string, error) {
 		resp, err := summarizePrompt.Generate(ctx,
 			&dotprompt.PromptRequest{
 				Variables: &promptInput{
-					URL: input,
+					Context: input,
 				},
 			},
 			nil,
@@ -71,7 +74,11 @@ func SummarizeBlog(ctx context.Context, url string) (string, error) {
 	})
 
 	// Run the flow
-	result, err := flow.Run(ctx, url)
+	context, err := fetchWebContent(url)
+	if err != nil {
+		return "", fmt.Errorf("failed to fetch the web content: %w", err)
+	}
+	result, err := flow.Run(ctx, context)
 	if err != nil {
 		return "", fmt.Errorf("failed to run the flow: %w", err)
 	}

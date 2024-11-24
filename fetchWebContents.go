@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -42,5 +44,16 @@ func fetchWebContent(url string) (string, error) {
 	}
 
 	body := doc.Find("body").Text()
-	return body, nil
+
+	var result []string
+	scanner := bufio.NewScanner(strings.NewReader(body))
+
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if line != "" {
+			result = append(result, line)
+		}
+	}
+
+	return strings.Join(result, "\n"), nil
 }
