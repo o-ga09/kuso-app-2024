@@ -1,0 +1,25 @@
+name: Execute Cron Job Latest GoBlog
+
+on:
+  schedule:
+    - cron: "30 8 * * *"
+  workflow_dispatch:
+
+env:
+  GOOGLE_GENAI_API_KEY: ${{ secrets.GOOGLE_GENAI_API_KEY}}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+  
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.23
+    
+    - name: Run Go Program
+      run: go run .
