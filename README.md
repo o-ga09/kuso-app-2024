@@ -6,6 +6,7 @@
 [クソアプリハッカソン 2024 @ Findy](https://kuso-app.connpass.com/event/336557/)
 
 [Qiita記事(TBD)](https://qiita.com/o-ga)
+
 [発表資料](https://docs.google.com/presentation/d/12SoPi9srlx3E_gwxCvr6YAPmIsZPNJK8nYJ-H7tyOjw/edit?usp=sharing)
 
 ---
