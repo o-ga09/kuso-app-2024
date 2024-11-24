@@ -9,6 +9,10 @@ import (
 	"os"
 )
 
+var (
+	ErrHTTPStatusNotOK = fmt.Errorf("HTTP status code is not OK")
+)
+
 // SlackMessage はSlackに送信するメッセージの構造体です
 type SlackMessage struct {
 	Text string `json:"text"`
@@ -32,7 +36,7 @@ func SendSlackNotification(ctx context.Context, message SlackMessage) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("error sending the message to Slack: status code %d", resp.StatusCode)
+		return ErrHTTPStatusNotOK
 	}
 	return nil
 }
