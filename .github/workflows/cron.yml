@@ -8,6 +8,7 @@ on:
 env:
   GOOGLE_GENAI_API_KEY: ${{ secrets.GOOGLE_GENAI_API_KEY}}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  FEED_URL: ${{ secrets.FEED_URL}}
 
 jobs:
   run:
