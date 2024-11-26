@@ -1,5 +1,11 @@
 # クソアプリハッカソン2024
 
+[![Backend Test](https://github.com/o-ga09/kuso-app-2024/actions/workflows/lint-and-test.yml/badge.svg?branch=main)](https://github.com/o-ga09/kuso-app-2024/actions/workflows/lint-and-test.yml)
+
+> [!Note]
+> 本リポジトリは、クソアプリハッカソン2024で作成したアプリケーションです。
+> Go Blogの更新を確認して、Slack通知するアプリケーションです。
+
 [クソアプリアドベントカレンダー](https://qiita.com/advent-calendar/2024/kuso-app)のアプリをハッカソン形式で作る！2024
 
 
