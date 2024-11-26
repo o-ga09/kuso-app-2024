@@ -5,9 +5,11 @@ go 1.23.0
 require (
 	github.com/PuerkitoBio/goquery v1.10.0
 	github.com/firebase/genkit/go v0.2.1
+	github.com/google/uuid v1.6.0
 	github.com/invopop/jsonschema v0.12.0
 	github.com/jarcoal/httpmock v1.3.1
 	github.com/newmo-oss/ctxtime v0.1.0
+	github.com/newmo-oss/testid v0.1.0
 )
 
 require (
@@ -28,11 +30,9 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/generative-ai-go v0.16.1-0.20240711222609-09946422abc6 // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.5 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/newmo-oss/testid v0.1.0 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
