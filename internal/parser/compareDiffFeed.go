@@ -3,7 +3,8 @@ package parser
 import (
 	"context"
 	"errors"
-	"time"
+
+	"github.com/newmo-oss/ctxtime"
 )
 
 var (
@@ -12,23 +13,17 @@ var (
 
 func CompareDiffFeed(ctx context.Context, latestFeed *AtomFeed) (*Entry, error) {
 	// 今日の日付と比較して、今日以降のフィードを取得
-	isLatest, err := isCompareDiffFeed(ctx, &latestFeed.Entries[0])
-	if err != nil {
-		return nil, err
-	}
-
+	isLatest := isCompareDiffFeed(ctx, &latestFeed.Entries[0])
 	if isLatest {
 		return &latestFeed.Entries[0], nil
 	}
 	return nil, ErrNotLatestFeed
 }
 
-func isCompareDiffFeed(_ context.Context, feedEntity *Entry) (bool, error) {
-	// ctxtime(https://github.com/newmo-oss/ctxtime)を使いたい
-	// が、今回は、ctxtimeを使わずに、time.Timeを使う
-	now := time.Now()
+func isCompareDiffFeed(ctx context.Context, feedEntity *Entry) bool {
+	now := ctxtime.Now(ctx)
 	if feedEntity.Published.Year() >= now.Year() && feedEntity.Published.Month() >= now.Month() && feedEntity.Published.Day() >= now.Day() {
-		return true, nil
+		return true
 	}
-	return false, nil
+	return false
 }

@@ -5,10 +5,9 @@ import (
 	"encoding/xml"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 )
-
-const FEED_URL = "https://go.dev/blog/feed.atom"
 
 // AtomFeed はAtomフィードの構造体です
 type AtomFeed struct {
@@ -32,21 +31,23 @@ type Link struct {
 
 func ParseAtomFeed(ctx context.Context) (*AtomFeed, error) {
 	// AtomフィードのURLを指定
-	url := FEED_URL
+	url := os.Getenv("FEED_URL")
+	if url == "" {
+		return nil, fmt.Errorf("FEED_URL is empty")
+	}
 
 	// フィードを取得
 	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("Error fetching the feed:", err)
-		return nil, err
+	if err != nil || resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("error fetching the feed: %v", err)
 	}
 	defer resp.Body.Close()
 
 	// フィードを解析
 	var feed AtomFeed
 	if err := xml.NewDecoder(resp.Body).Decode(&feed); err != nil {
-		fmt.Println("Error decoding the feed:", err)
-		return nil, err
+
+		return nil, fmt.Errorf("error decoding the feed: %v", err)
 	}
 	return &feed, nil
 }
