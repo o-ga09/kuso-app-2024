@@ -15,7 +15,7 @@ import (
 func fetchWebContent(url string) (string, error) {
 	// Fetch the content from the provided URL
 	res, err := http.Get(url)
-	if err != nil {
+	if err != nil || res.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("failed to fetch URL: %w", err)
 	}
 	defer res.Body.Close()
@@ -40,7 +40,8 @@ func fetchWebContent(url string) (string, error) {
 	// Prefer 'article' content, fallback to 'body' if not available
 	article := doc.Find("article").Text()
 	if article != "" {
-		return article, nil
+		trimString := strings.TrimSpace(article)
+		return trimString, nil
 	}
 
 	body := doc.Find("body").Text()
