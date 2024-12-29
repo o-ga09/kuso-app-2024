@@ -55,8 +55,9 @@ func Test_isCompareDiffFeed(t *testing.T) {
 		args args
 		want bool
 	}{
-		{name: "正常系 - フィードの日付が今日以降の場合", args: args{ctx: context.Background(), feedEntity: &Entry{Published: time.Date(2024, 11, 11, 9, 0, 0, 0, time.UTC)}, now: time.Date(2024, 11, 11, 9, 0, 0, 0, time.UTC)}, want: true},
-		{name: "正常系 - フィードの日付が今日以前の場合", args: args{ctx: context.Background(), feedEntity: &Entry{Published: time.Date(2024, 11, 11, 9, 0, 0, 0, time.UTC)}, now: time.Date(2024, 11, 26, 9, 0, 0, 0, time.UTC)}, want: false},
+		{name: "正常系 - 最新記事がツールが実行された当日だった場合、trueである", args: args{ctx: context.Background(), feedEntity: &Entry{Published: time.Date(2024, 11, 11, 9, 0, 0, 0, time.UTC)}, now: time.Date(2024, 11, 11, 9, 0, 0, 0, time.UTC)}, want: true},
+		{name: "正常系 - 最新記事がツールが実行された当日以降だった場合、falseである", args: args{ctx: context.Background(), feedEntity: &Entry{Published: time.Date(2024, 11, 11, 9, 0, 0, 0, time.UTC)}, now: time.Date(2024, 11, 26, 9, 0, 0, 0, time.UTC)}, want: false},
+		{name: "正常系 - 最新記事がツールが実行された日付の前日以降だった場合、trueである", args: args{ctx: context.Background(), feedEntity: &Entry{Published: time.Date(2024, 11, 10, 9, 0, 0, 0, time.UTC)}, now: time.Date(2024, 11, 11, 9, 0, 0, 0, time.UTC)}, want: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

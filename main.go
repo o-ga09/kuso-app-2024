@@ -46,7 +46,7 @@ func main() {
 		}
 		// Slackに通知する
 		message = notifier.SlackMessage{
-			Text: "<!channel>\n ⭐️ 新しいブログ記事が投稿されました！ ⭐️\n\n ======== \n" + summary + "========",
+			Text: "<!channel>\n ⭐️ 新しいブログ記事が投稿されました！ ⭐️\nTitle: " + latestFeed.Title + "\nPublished: " + latestFeed.Published.Local().String() + "\n\n ======== \n" + summary + "========",
 		}
 	}
 

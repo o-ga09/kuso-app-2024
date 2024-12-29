@@ -22,7 +22,7 @@ func CompareDiffFeed(ctx context.Context, latestFeed *AtomFeed) (*Entry, error) 
 
 func isCompareDiffFeed(ctx context.Context, feedEntity *Entry) bool {
 	now := ctxtime.Now(ctx)
-	if feedEntity.Published.Year() >= now.Year() && feedEntity.Published.Month() >= now.Month() && feedEntity.Published.Day() >= now.Day() {
+	if feedEntity.Published.Year() >= now.Year() && feedEntity.Published.Month() >= now.Month() && feedEntity.Published.Day() >= (now.Day()-1) {
 		return true
 	}
 	return false
